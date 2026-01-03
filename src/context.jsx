@@ -7,14 +7,12 @@ export const DatC = createContext()
 export const DataP = ({childre}) => {
 
     ///////needed things for landing page
-    const N = useNavigate()
-    const go2game = () => {
-        N("/G")
-    }
+
+    ////not anything
 
     ///////
 
 
-    return(<DatC.Provider value={{go2game}}>{childre}</DatC.Provider>)
+    return(<DatC.Provider>{childre}</DatC.Provider>)
 }
 
