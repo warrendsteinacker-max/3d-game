@@ -6,6 +6,6 @@ export const DatC = createContext()
 export const DataP = ({childre}) => {
 
 
-    return(<DatC value={{}}></DatC>)
+    return(<DatC.Provider value={{}}>{childre}</DatC.Provider>)
 }
 
