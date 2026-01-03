@@ -1,9 +1,11 @@
 import React from 'react'
 
-const gamep = () => {
+const Gamep = () => {
   return (
-    <div>gamep</div>
+    <div style={{color: "red", height: "100vh", width: "100vw" }}>
+        <h1 style={{margin: auto}}>h</h1>
+    </div>
   )
 }
 
-export default gamep
+export default Gamep

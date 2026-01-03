@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 ///import { DataP } from "./context"
 import LP from "./componets/landingp"
+import Gamep from "./componets/gamep"
 function App() {
 
 
@@ -11,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LP/>}></Route>
 
-          <Route path="/G" element={<GP/>}></Route>
+          <Route path="/G" element={<Gamep/>}></Route>
 
         </Routes>
         </BrowserRouter>
