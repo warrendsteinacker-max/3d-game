@@ -1,92 +1,57 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { Link } from 'react-router-dom';
 
 const Gamep = () => {
     const mountRef = useRef(null);
     const shipRef = useRef(null);
     const keys = useRef({});
+    const [coords, setCoords] = useState({ x: 0, y: 0, z: 0 });
 
     useEffect(() => {
         let frameId;
         const scene = new THREE.Scene();
         const loader = new THREE.TextureLoader();
 
-        // 1. IMPROVED BACKGROUND (Starfield)
-        // We create a large sphere around the scene with stars inside
-        const starGeo = new THREE.SphereGeometry(90, 32, 32);
+        // 1. Scene Setup
+        const starGeo = new THREE.SphereGeometry(200, 32, 32);
         const starMat = new THREE.MeshBasicMaterial({
             map: loader.load('/vimal-s-GBg3jyGS-Ug-unsplash.jpg'),
-            side: THREE.BackSide // Render on the inside of the sphere
+            side: THREE.BackSide 
         });
-        const starField = new THREE.Mesh(starGeo, starMat);
-        scene.add(starField);
+        scene.add(new THREE.Mesh(starGeo, starMat));
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); // Required for screenshots
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         
-        // Clear previous canvas if any (Fixes the multiple canvas bug)
         if (mountRef.current) {
             mountRef.current.innerHTML = "";
             mountRef.current.appendChild(renderer.domElement);
         }
 
-        const sunLight = new THREE.DirectionalLight(0xffffff, 2.5);
-        sunLight.position.set(-5, 10, 7);
-        scene.add(sunLight);
-        scene.add(new THREE.AmbientLight(0x404040, 2));
+        scene.add(new THREE.AmbientLight(0xffffff, 0.7));
 
-        // 2. REALISTIC GEOMETRY SHIP
+        // 2. Ship Geometry
         const shipGroup = new THREE.Group();
-        const metalMat = new THREE.MeshStandardMaterial({ 
-            color: 0x888888, 
-            metalness: 0.8, 
-            roughness: 0.2 
-        });
-
-        // Main Cockpit/Body
-        const body = new THREE.Mesh(new THREE.ConeGeometry(0.25, 1, 12), metalMat);
+        const metalMat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.9, roughness: 0.1 });
+        const body = new THREE.Mesh(new THREE.ConeGeometry(0.2, 1.2, 12), metalMat);
         body.rotation.x = Math.PI / 2;
         shipGroup.add(body);
-
-        // Sleek Wings
-        const wingShape = new THREE.BoxGeometry(1.2, 0.05, 0.5);
-        const wings = new THREE.Mesh(wingShape, metalMat);
-        wings.position.z = 0.2;
-        shipGroup.add(wings);
-
-        // Engine Glow (The "Realistic" touch)
-        const engineGeo = new THREE.CylinderGeometry(0.15, 0.15, 0.1, 12);
-        const engineMat = new THREE.MeshBasicMaterial({ color: 0x00ffff }); // Cyan Glow
-        const engine = new THREE.Mesh(engineGeo, engineMat);
-        engine.rotation.x = Math.PI / 2;
-        engine.position.z = 0.5;
-        shipGroup.add(engine);
-
-        // Point Light for the Engine
-        const thrusterLight = new THREE.PointLight(0x00ffff, 1, 2);
-        thrusterLight.position.set(0, 0, 0.6);
-        shipGroup.add(thrusterLight);
-
-        shipGroup.position.set(0, 0, 10);
+        
+        shipGroup.position.set(0, 0, 15);
         scene.add(shipGroup);
         shipRef.current = shipGroup;
 
-        // 3. EARTH
+        // 3. Earth
         const earthGroup = new THREE.Group();
-        const earthMesh = new THREE.Mesh(
-            new THREE.IcosahedronGeometry(2, 12), 
+        earthGroup.add(new THREE.Mesh(
+            new THREE.IcosahedronGeometry(3, 15), 
             new THREE.MeshStandardMaterial({ map: loader.load('/earth_day.jpg') })
-        );
-        const clouds = new THREE.Mesh(
-            new THREE.IcosahedronGeometry(2.05, 12), 
-            new THREE.MeshStandardMaterial({ map: loader.load('/earth_clouds.jpg'), transparent: true, opacity: 0.4 })
-        );
-        earthGroup.add(earthMesh, clouds);
+        ));
         scene.add(earthGroup);
 
-        // 4. CONTROLS & ANIMATION
+        // 4. Input & Animation
         const onKeyDown = (e) => { keys.current[e.key.toLowerCase()] = true; };
         const onKeyUp = (e) => { keys.current[e.key.toLowerCase()] = false; };
         window.addEventListener('keydown', onKeyDown);
@@ -94,18 +59,23 @@ const Gamep = () => {
 
         const animate = () => {
             frameId = requestAnimationFrame(animate);
-            earthGroup.rotation.y += 0.0005;
-
             if (shipRef.current) {
                 const ship = shipRef.current;
-                const speed = keys.current['w'] ? 0.15 : (keys.current['s'] ? -0.1 : 0);
-                ship.translateZ(-speed);
-
+                const speed = keys.current['shift'] ? 0.3 : 0.12;
+                if (keys.current['w']) ship.translateZ(-speed);
+                if (keys.current['s']) ship.translateZ(speed);
                 if (keys.current['a']) ship.rotation.y += 0.03;
                 if (keys.current['d']) ship.rotation.y -= 0.03;
+                if (keys.current['r']) ship.position.y += speed;
+                if (keys.current['f']) ship.position.y -= speed;
 
-                // Camera following
-                const cameraOffset = new THREE.Vector3(0, 1.2, 5).applyMatrix4(ship.matrixWorld);
+                setCoords({ 
+                    x: ship.position.x.toFixed(2), 
+                    y: ship.position.y.toFixed(2), 
+                    z: ship.position.z.toFixed(2) 
+                });
+
+                const cameraOffset = new THREE.Vector3(0, 1.8, 6).applyMatrix4(ship.matrixWorld);
                 camera.position.lerp(cameraOffset, 0.1);
                 camera.lookAt(ship.position);
             }
@@ -113,25 +83,43 @@ const Gamep = () => {
         };
         animate();
 
-        const handleResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        };
-        window.addEventListener('resize', handleResize);
-
-        // CLEANUP
         return () => {
             cancelAnimationFrame(frameId);
-            window.removeEventListener('resize', handleResize);
             window.removeEventListener('keydown', onKeyDown);
             window.removeEventListener('keyup', onKeyUp);
-            if (mountRef.current) mountRef.current.innerHTML = "";
             renderer.dispose();
         };
     }, []);
 
-    return <div ref={mountRef} style={{ width: "100vw", height: "100vh", background: "#000" }} />;
+    // SCREENSHOT & LOGGING FUNCTION
+    const captureData = () => {
+        const canvas = mountRef.current.firstChild;
+        const image = canvas.toDataURL("image/png");
+        console.log(`LOG [${new Date().toISOString()}]: Ship at X:${coords.x} Y:${coords.y} Z:${coords.z}`);
+        const link = document.createElement('a');
+        link.download = `training-capture-${Date.now()}.png`;
+        link.href = image;
+        link.click();
+    };
+
+    return (
+        <div style={{ position: "relative", backgroundColor: "#000" }}>
+            <div ref={mountRef} style={{ width: "100vw", height: "100vh" }} />
+            
+            {/* HUD with Links & Logging */}
+            <div style={hudStyle}>
+                <h3>SYSTEM CONTROLS</h3>
+                <p>POS: {coords.x}, {coords.y}, {coords.z}</p>
+                <button onClick={captureData} style={btnStyle}>📸 CAPTURE & LOG</button>
+                <Link to="/map" style={linkStyle}>🗺️ OPEN PLANET MAP</Link>
+            </div>
+        </div>
+    );
 };
+
+// Styles for the HUD
+const hudStyle = { position: "absolute", top: "20px", left: "20px", color: "#00ffff", fontFamily: "monospace", background: "rgba(0,0,0,0.7)", padding: "20px", borderRadius: "10px", border: "1px solid #00ffff", display: "flex", flexDirection: "column", gap: "10px" };
+const btnStyle = { background: "#00ffff", color: "#000", border: "none", padding: "10px", cursor: "pointer", fontWeight: "bold" };
+const linkStyle = { color: "#fff", textDecoration: "underline", marginTop: "10px" };
 
 export default Gamep;

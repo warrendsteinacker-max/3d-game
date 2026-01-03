@@ -11,9 +11,8 @@ function App() {
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<LP/>}></Route>
-
+          <Route path="/map" element={<PlanetMap/>}></Route>
           <Route path="/G" element={<Gamep/>}></Route>
-
         </Routes>
         </BrowserRouter>
 
