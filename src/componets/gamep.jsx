@@ -2,8 +2,8 @@ import React from 'react'
 
 const Gamep = () => {
   return (
-    <div style={{color: "red", height: "100vh", width: "100vw" }}>
-        <h1 style={{margin: auto}}>h</h1>
+    <div style={{backgroundColor: "red", height: "100vh", width: "100vw", justifyContent: "center", alignItems: "center", display: "flex" }}>
+        <h1 style={{margin: "auto"}}>h</h1>
     </div>
   )
 }
