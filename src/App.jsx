@@ -10,7 +10,9 @@ function App() {
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<LP/>}></Route>
-          <Route path="/G" element={<LP/>}></Route>
+
+          <Route path="/G" element={<GP/>}></Route>
+
         </Routes>
         </BrowserRouter>
 
