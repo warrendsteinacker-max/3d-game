@@ -15,6 +15,6 @@ export const DataP = ({childre}) => {
     ///////
 
 
-    return(<DatC.Provider value={{}}>{childre}</DatC.Provider>)
+    return(<DatC.Provider value={{go2game}}>{childre}</DatC.Provider>)
 }
 
