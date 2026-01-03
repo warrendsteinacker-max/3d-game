@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 ///import { DataP } from "./context"
 import LP from "./componets/landingp"
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
@@ -10,6 +10,7 @@ function App() {
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<LP/>}></Route>
+          <Route path="/G" element={<LP/>}></Route>
         </Routes>
         </BrowserRouter>
 
