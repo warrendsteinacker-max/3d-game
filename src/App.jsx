@@ -1,27 +1,24 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-///import { DataP } from "./context"
-import LP from "./componets/landingp"
-import Gamep from "./componets/gamep"
-import PlanetMap from "./componets/PlanetMap"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { DatProvider } from "./context"; // Adjust this path to where your context.jsx is
+import LP from "./componets/LP";
+import Gamep from "./componets/gamep";
+import PlanetMap from "./componets/PlanetMap";
+
 function App() {
-
-
   return (
-    <>
-
-        <BrowserRouter>
+    <DatProvider> {/* THIS MUST WRAP EVERYTHING */}
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LP/>}></Route>
-          <Route path="/map" element={<PlanetMap/>}></Route>
-          <Route path="/G" element={<Gamep/>}></Route>
+          <Route path="/" element={<LP />} />
+          <Route path="/G" element={<Gamep />} />
+          <Route path="/map" element={<PlanetMap />} />
         </Routes>
-        </BrowserRouter>
-
-    </>
-  )
+      </BrowserRouter>
+    </DatProvider>
+  );
 }
 
-export default App
+export default App;
 
 /////          <Route path="/G"></Route>
 ////          <Route path="/edit"></Route>
