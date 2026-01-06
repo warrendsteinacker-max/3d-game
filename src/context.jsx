@@ -1,18 +1,19 @@
-import { createContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { createContext, useState } from 'react';
 
+export const DatC = createContext();
 
-export const DatC = createContext()
+export const DatProvider = ({ children }) => {
+    const [planets, setPlanets] = useState([]);
+    const [shipPos, setShipPos] = useState({ x: 0, z: 0 }); // To show your location on map
 
-export const DataP = ({childre}) => {
+    const addPlanet = (planetData) => {
+        setPlanets((prev) => [...prev, planetData]);
+    };
 
-    ///////needed things for landing page
-
-    ////not anything
-
-    ///////
-
-
-    return(<DatC.Provider>{childre}</DatC.Provider>)
-}
+    return (
+        <DatC.Provider value={{ planets, addPlanet, shipPos, setShipPos }}>
+            {children}
+        </DatC.Provider>
+    );
+};
 
