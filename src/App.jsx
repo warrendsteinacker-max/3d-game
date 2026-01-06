@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DatProvider } from "./context"; // Adjust this path to where your context.jsx is
-import LP from "./componets/LP";
+import LP from "./componets/landingp";
 import Gamep from "./componets/gamep";
 import PlanetMap from "./componets/PlanetMap";
 
