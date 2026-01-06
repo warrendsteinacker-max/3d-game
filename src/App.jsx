@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 ///import { DataP } from "./context"
 import LP from "./componets/landingp"
 import Gamep from "./componets/gamep"
+import PlanetMap from "./componets/PlanetMap"
 function App() {
 
 
