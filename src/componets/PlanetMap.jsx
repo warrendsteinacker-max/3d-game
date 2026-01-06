@@ -146,3 +146,6 @@ const backBtn = { background: '#333', color: '#fff', border: 'none', padding: '1
 const coordBox = { marginTop: '15px', padding: '10px', border: '1px solid #0ff', fontSize: '0.9em', color: '#fff', background: '#002222' };
 
 export default PlanetMap;
+
+
+///////
