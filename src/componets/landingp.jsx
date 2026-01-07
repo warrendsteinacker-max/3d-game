@@ -29,6 +29,9 @@ const LP = () => {
                 }}>
                     Start Game
                 </Link>
+                <Link to="/LL" style={{background: "red", color: "white" }}>
+                p
+                </Link>
             </div>
         </div>
     );
