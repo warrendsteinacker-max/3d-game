@@ -1,5 +1,6 @@
 
-const LL = () => {
+import {Link} from "react-router-dom"
 
-    return(<><header><img src="./public/earth_clouds.jpg" style={{width: "50px", height: "50px"}}/></header><main></main><footer></footer></>)
+export const LL = () => {
+    return(<><div><nav><Link to="/G"></Link><Link to="/"></Link><Link to="/map"></Link></nav></div></>)
 }

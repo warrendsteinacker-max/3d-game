@@ -3,6 +3,7 @@ import { DatProvider } from "./context"; // Adjust this path to where your conte
 import LP from "./componets/landingp";
 import Gamep from "./componets/gamep";
 import PlanetMap from "./componets/PlanetMap";
+//import {LL} from "./componets/LL";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LP />} />
-          <Route path="/LL" element={<LL/>}
+          
           <Route path="/G" element={<Gamep />} />
           <Route path="/map" element={<PlanetMap />} />
         </Routes>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+//import {LL} from "./LL";
 
 const LP = () => {
     return (
@@ -29,9 +30,9 @@ const LP = () => {
                 }}>
                     Start Game
                 </Link>
-                <Link to="/LL" style={{background: "red", color: "white" }}>
+                {/* <Link to="/LL" style={{background: "red", color: "white" }}>
                 p
-                </Link>
+                </Link> */} 
             </div>
         </div>
     );
