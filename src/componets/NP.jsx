@@ -1,7 +1,7 @@
 import React from "react";
 
 
-class NP extends React.Component(){
+class NP extends React.Component{
 
 }
 
