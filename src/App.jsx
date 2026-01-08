@@ -4,6 +4,7 @@ import LP from "./componets/landingp";
 import Gamep from "./componets/gamep";
 import PlanetMap from "./componets/PlanetMap";
 import {LL} from "./componets/LL";
+import NP from "./componets/NP";
 
 function App() {
   return (
