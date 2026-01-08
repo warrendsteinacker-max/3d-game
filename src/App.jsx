@@ -11,6 +11,7 @@ function App() {
       <BrowserRouter>
         <nav>
           <Link to="/">landing page</Link>
+          <Link to="/np">new p</Link>
         </nav>
         <Routes>
           <Route path="/" element={<LP />} />
