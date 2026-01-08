@@ -14,6 +14,7 @@ function App() {
           <Link to="/np">new p</Link>
         </nav>
         <Routes>
+          <Route to="/np" element={<NP/>}></Route>
           <Route path="/" element={<LP />} />
           <Route path="/LL" element={<LL/>}/>
           <Route path="/G" element={<Gamep />} />
